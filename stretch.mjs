@@ -3,6 +3,9 @@ const client = Binance()
 import * as dotenv from 'dotenv' //import instead of require for .mjs file
 dotenv.config()
 
+let i = 1
+
+while (true) {
 //Retrieve crypto data from Luno 
 async function fetchLunoMYR(){
     let url = "https://api.luno.com/api/1/ticker?pair="
@@ -57,3 +60,9 @@ console.log(nameLunoUSD, " price on Luno:        USD ", cryptoLunoUSD)
 console.log(process.env.CRYPTO_BINANCE, " price on Binance:    USD ", cryptoBinanceUSD)
 console.log("Price difference:             USD ", priceDiff)
 console.log("Luno premium:                     ", percentDiff, "%")
+console.log("Call #", i)
+console.log("-------------------------------------------------------------")
+
+await new Promise(r => setTimeout(r, 2000));
+i++
+}
