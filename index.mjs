@@ -11,7 +11,7 @@ async function fetchBTCMYR(){
 }
 
 const btcLunoMYR = await fetchBTCMYR()
-//console.log(btcLunoMYR)
+console.log(btcLunoMYR)
 
 //Retrieve USDMYR conversion rate 
 async function fetchConv(){
