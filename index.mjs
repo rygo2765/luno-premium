@@ -7,11 +7,10 @@ dotenv.config()
 async function fetchBTCMYR(){
   const response = await fetch("https://api.luno.com/api/1/ticker?pair=XBTMYR")
   const BTCMYR = await response.json()
-  return BTCMYR
+  return BTCMYR['bid']
 }
 
-const tickerLuno = await fetchBTCMYR()
-const btcLunoMYR = tickerLuno ['bid']
+const btcLunoMYR = await fetchBTCMYR()
 //console.log(btcLunoMYR)
 
 //Retrieve USDMYR conversion rate 
@@ -27,11 +26,10 @@ async function fetchConv(){
 
   const response = await fetch("https://api.apilayer.com/fixer/latest?symbols=MYR&base=USD", requestOptions)
   const USDMYR = await response.json()
-  return USDMYR 
+  return USDMYR.rates['MYR'] 
 }
 
-const tickerFixer = await fetchConv()
-const convRate = tickerFixer.rates['MYR']
+const convRate = await fetchConv()
 //console.log(convRate)
 
 
@@ -42,15 +40,13 @@ let btcBinanceUSD = test.BTCBUSD
 
 
 //Calculate BTCUSD price from Luno, price diff & premium 
-new Promise((resolve, reject) => {
-  let btcLunoUSD = btcLunoMYR / convRate
-  let priceDiff = Math.abs(btcLunoUSD - btcBinanceUSD)
-  let percentDiff = (priceDiff/btcLunoUSD)*100
-  percentDiff = percentDiff.toFixed(2)
-  console.log("BTCMYR price on Luno:        MYR ", btcLunoMYR)
-  console.log("USDMYR:                          ", convRate)
-  console.log("BTCUSD price on Luno:        USD ", btcLunoUSD)
-  console.log("BTCUSD price on Binance:     USD ", btcBinanceUSD)
-  console.log("Price difference:            USD ", priceDiff)
-  console.log("Luno premium:                    ", percentDiff, "%")
-})
+let btcLunoUSD = btcLunoMYR / convRate
+let priceDiff = Math.abs(btcLunoUSD - btcBinanceUSD)
+let percentDiff = (priceDiff/btcLunoUSD)*100
+percentDiff = percentDiff.toFixed(2)
+console.log("BTCMYR price on Luno:        MYR ", btcLunoMYR)
+console.log("USDMYR:                          ", convRate)
+console.log("BTCUSD price on Luno:        USD ", btcLunoUSD)
+console.log("BTCUSD price on Binance:     USD ", btcBinanceUSD)
+console.log("Price difference:            USD ", priceDiff)
+console.log("Luno premium:                    ", percentDiff, "%")
