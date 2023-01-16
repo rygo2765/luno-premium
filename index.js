@@ -7,16 +7,16 @@ dotenv.config()
 
 //Retrieve BTCMYR data from Luno 
 const btcLunoMYR = await fetchBTCMYR()
-// console.log(btcLunoMYR)
+//console.log(btcLunoMYR)
 
 // //Retrieve USDMYR conversion rate 
 let convRate = await convRates(process.env.API_KEY)
-// console.log(convRate)
+//console.log(convRate)
 
 
 //Call BTCUSD price from Binance 
 let btcBinanceUSD = await binanceUSD()
-// console.log(btcBinanceUSD);
+//console.log(btcBinanceUSD);
 
 
 //Calculate BTCUSD price from Luno, price diff & premium 
