@@ -7,8 +7,10 @@ test("Returns Message for Successful Response", async () => {
     const getBinancePrice = require('../lib/binance.js').default //used .defaults for export defaults 
     const MOCK_PRICE = 20000
     const MOCK_JSON_RESP = { BTCBUSD: MOCK_PRICE }
+    //mock Binance library
     jest.mock('node-binance-api', () => {
         return class Binance {
+            //only mock the prices within class Binance
             prices() {
                 return new Promise(resolve => resolve(MOCK_JSON_RESP));
             }
@@ -20,6 +22,7 @@ test("Returns Message for Successful Response", async () => {
 //test for a unsuccesful fetch response from Binance
 test("Returns Message for Unsuccesful Response", async () => {
     const getBinancePrice = require('../lib/binance.js').default //for export defaults 
+    //mock Binance library
     jest.mock('node-binance-api', () => {
         return class Binance {
             prices() {
