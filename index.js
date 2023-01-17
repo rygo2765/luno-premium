@@ -1,39 +1,34 @@
-import { fetchBTCMYR } from './lib/luno.js'
-import convRates from './lib/conv.js'
-import binanceUSD from './lib/binance.js'
-import { calc } from './lib/calculations.js'
-import * as dotenv from 'dotenv' //import instead of require for .mjs file
+//import used modules and dotenv
+import { fetchLuno } from './lib/luno.js'
+import fetchRates from './lib/conv.js'
+import fetchBinance from './lib/binance.js'
+import { premiumCalc } from './lib/calculations.js'
+import * as dotenv from 'dotenv'
 dotenv.config()
 
 //Retrieve BTCMYR data from Luno 
-const btcLunoMYR = await fetchBTCMYR()
+const btcLunoMYR = await fetchLuno()
 if (typeof btcLunoMYR !== "number") {
     throw 'Data retrieved from Luno is not a number'
 }
-//console.log(typeof btcLunoMYR)
+
 
 // //Retrieve USDMYR conversion rate 
-let convRate = await convRates(process.env.API_KEY)
+let convRate = await fetchRates(process.env.API_KEY)
 if (typeof convRate !== "number") {
     throw 'Conversion rate retrieved is not a number'
 }
-//console.log(convRate)
 
 
 //Call BTCUSD price from Binance 
-let btcBinanceUSD = await binanceUSD()
+let btcBinanceUSD = await fetchBinance()
 if (typeof btcBinanceUSD !== "number") {
     throw 'Data retrieved from Binance is not a number'
 }
-//console.log(btcBinanceUSD);
 
 
 //Calculate BTCUSD price from Luno, price diff & premium 
-let { btcLunoUSD, priceDiff, percentDiff } = await calc(btcLunoMYR, convRate, btcBinanceUSD)
-//console.log(typeof percentDiff)
-// console.log(cryptMath.btcLunoUSD)
-// console.log(cryptMath.priceDiff)
-// console.log(cryptMath.percentDiff)
+let { btcLunoUSD, priceDiff, percentDiff } = await premiumCalc(btcLunoMYR, convRate, btcBinanceUSD)
 
 //Print values
 console.log("BTCMYR price on Luno:".padEnd(40, ' ') + "MYR ", btcLunoMYR)

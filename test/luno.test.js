@@ -1,6 +1,6 @@
-import { fetchBTCMYR } from '../lib/luno.js'
+import { fetchLuno } from '../lib/luno.js'
 
-//test luno.js when returns correct price
+//test luno.js when successfully returns price
 test("Returns the correct price", async () => {
     const MOCK_PRICE = 91000
     const MOCK_JSON_RESP = { bid: MOCK_PRICE }
@@ -9,10 +9,10 @@ test("Returns the correct price", async () => {
         status: 200,
         json: () => Promise.resolve(MOCK_JSON_RESP)
     }))
-    expect(await fetchBTCMYR()).toBe(MOCK_PRICE)
+    expect(await fetchLuno()).toBe(MOCK_PRICE)
 })
 
-//test luno.js when the 
+//test luno.js when unsuccessfully return price
 test("Returns an error in retrieving price", async () => {
     const MOCK_STATUS_CODE = 500
 
@@ -20,6 +20,6 @@ test("Returns an error in retrieving price", async () => {
         status: MOCK_STATUS_CODE,
         json: () => { }
     }));
-    expect(await fetchBTCMYR()).toBe("Failed to retrieve price");
+    expect(await fetchLuno()).toBe("Failed to retrieve price");
 });
 

@@ -1,5 +1,6 @@
 import convRate from '../lib/conv.js'
 
+//test for a succesful fetch response of conversion rate from Fixer API
 test("Returns the correct conversion rate", async () => {
     const MOCK_RATE = 4.5
     const MOCK_JSON_RESP = {
@@ -15,6 +16,7 @@ test("Returns the correct conversion rate", async () => {
     expect(await convRate()).toBe(MOCK_RATE)
 })
 
+//test for a unsuccesful fetch response of conversion rate from Fixer API
 test("Returns an error in retrieving conversion rate", async () => {
     const MOCK_STATUS_CODE = 500
 
